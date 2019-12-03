@@ -73,10 +73,15 @@ function registerValidSW(swUrl, config) {
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
               );
+              window.postMessage('UPDATE_AVAILABLE')
 
               // Execute callback
               if (config && config.onUpdate) {
-                config.onUpdate(registration);
+                window.addEventListener('message', event => {
+                  if (event.data === 'UPDATE') {
+                    config.onUpdate(registration)
+                  }
+                }, false)
               }
             } else {
               // At this point, everything has been precached.
