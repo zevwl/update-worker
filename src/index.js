@@ -10,16 +10,17 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register({
-  onUpdate: reg => {
-    const waiting = reg.waiting
 
-    if (waiting) {
-      waiting.addEventListener('statechange', event => {
-        if (event.target.state === 'activated') {
-          window.location.reload()
-        }
-      })
-      waiting.postMessage({type: 'SKIP_WAITING'})
-    }
+  // Source: https://stackoverflow.com/a/58277085/5090056
+  onUpdate: reg => {
+    reg.unregister().then(() => {
+      window.location.reload();
+    })
+  },
+
+  onSuccess: reg => {
+    console.info('Service worker success!');
+    console.log(reg);
   }
+
 });
