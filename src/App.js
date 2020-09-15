@@ -26,7 +26,7 @@ function App() {
     }
   }, [])
 
-  const lastBuild = process.env.REACT_APP_BUILD_TIME
+  const lastBuild = new Date(process.env.REACT_APP_BUILD_TIME).toLocaleString()
 
   return (
     <div className="App">
